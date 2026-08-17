@@ -1,0 +1,8 @@
+.venv/
+.agents/
+.pytest_cache/
+*.db
+*.sqlite
+*.sqlite3
+.DS_Store
+*.log

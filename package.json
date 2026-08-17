@@ -1,0 +1,24 @@
+{
+  "name": "okx-dog",
+  "version": "1.0.0",
+  "description": "OKX-Dog 个人量化智能交易副驾驶系统 (AI Trading Co-pilot)",
+  "scripts": {
+    "start": "./start.sh",
+    "dev": "./start.sh",
+    "dev:py": "python3 start.py",
+    "test:backend": "/Users/wesson/OKX-dog/.agents/auditor_r2/venv/bin/python okx-dog-backend/test_backend_core.py",
+    "build:frontend": "cd okx-dog-frontend && npm run build"
+  },
+  "keywords": [
+    "okx",
+    "crypto",
+    "trading",
+    "quantitative",
+    "ai",
+    "llm",
+    "fastapi",
+    "react"
+  ],
+  "author": "wesson",
+  "license": "MIT"
+}
