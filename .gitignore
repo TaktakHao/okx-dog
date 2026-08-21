@@ -7,4 +7,6 @@
 .DS_Store
 *.log
 okx_dog_ai
+.antigravity_env/
+
 
