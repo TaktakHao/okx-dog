@@ -6,8 +6,13 @@
     "start": "./start.sh",
     "dev": "./start.sh",
     "dev:py": "python3 start.py",
-    "test:backend": "/Users/wesson/OKX-dog/.agents/auditor_r2/venv/bin/python okx-dog-backend/test_backend_core.py",
-    "build:frontend": "cd okx-dog-frontend && npm run build"
+    "test:backend": ".venv/bin/pytest -v -o asyncio_mode=auto okx-dog-backend/",
+    "test:ai": ".venv/bin/pytest -v okx-dog-ai/",
+    "build:frontend": "cd okx-dog-frontend && npm run build",
+    "docker:deploy": "./deploy_docker.sh",
+    "docker:redeploy": "./deploy_docker.sh",
+    "docker:logs": "docker compose logs -f",
+    "docker:down": "docker compose down"
   },
   "keywords": [
     "okx",

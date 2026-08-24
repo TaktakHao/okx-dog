@@ -1,0 +1,49 @@
+services:
+  # =============================================================================
+  # OKX-Dog 后端量化中枢与风控引擎
+  # =============================================================================
+  backend:
+    build:
+      context: .
+      dockerfile: ./okx-dog-backend/Dockerfile
+    container_name: okx-dog-backend
+    restart: unless-stopped
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - ENV=production
+      - MASTER_PASSWORD=${MASTER_PASSWORD:-OKX_DOG_DEFAULT_MASTER_PASS_2026}
+      # 默认大模型推理端点 (使用宿主机 Antigravity CLI 服务)
+      - DEFAULT_LLM_PROVIDER=${DEFAULT_LLM_PROVIDER:-antigravity}
+      - DEFAULT_LLM_BASE_URL=http://host.docker.internal:8001
+    volumes:
+      # 持久化挂载 SQLite 数据库与 AES-256-GCM 密盒
+      - ./okx-dog-backend/data:/app/okx-dog-backend/data
+      # 挂载宿主机 Antigravity 配置目录 (只读，若存在)
+      - ~/.gemini:/root/.gemini:ro
+    extra_hosts:
+      # 允许容器内直接访问宿主机的 Antigravity CLI / 本地服务端口
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/api/v1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # =============================================================================
+  # OKX-Dog 前端暗黑交易终端 UI 与 Nginx 反向代理
+  # =============================================================================
+  frontend:
+    build:
+      context: ./okx-dog-frontend
+      dockerfile: Dockerfile
+    container_name: okx-dog-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy

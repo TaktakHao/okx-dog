@@ -8,5 +8,8 @@
 *.log
 okx_dog_ai
 .antigravity_env/
+.env
+__pycache__/
+*.pyc
 
 
