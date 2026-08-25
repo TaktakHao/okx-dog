@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OKXDogAIPromptVariablesContract",
+  "description": "OKX-Dog AI 大模型研判 Prompt 上下文输入结构契约",
+  "type": "object",
+  "required": [
+    "symbol",
+    "current_price",
+    "timestamp",
+    "timeframe_data",
+    "derivatives_data",
+    "current_position",
+    "risk_limits"
+  ],
+  "properties": {
+    "symbol": { "type": "string" },
+    "current_price": { "type": "number" },
+    "timestamp": { "type": "integer" },
+    "timeframe_data": {
+      "type": "object",
+      "required": ["15m", "1h", "4h", "1d"],
+      "properties": {
+        "15m": { "$ref": "../schemas/market.json#/definitions/TechnicalIndicators" },
+        "1h": { "$ref": "../schemas/market.json#/definitions/TechnicalIndicators" },
+        "4h": { "$ref": "../schemas/market.json#/definitions/TechnicalIndicators" },
+        "1d": { "$ref": "../schemas/market.json#/definitions/TechnicalIndicators" }
+      }
+    },
+    "derivatives_data": {
+      "type": "object",
+      "required": ["funding_rate", "open_interest", "long_short_ratio"],
+      "properties": {
+        "funding_rate": { "type": "number" },
+        "open_interest": { "type": "number" },
+        "long_short_ratio": { "type": "number" }
+      }
+    },
+    "current_position": {
+      "type": ["object", "null"],
+      "description": "当前持仓概况（若无持仓为 null）"
+    },
+    "risk_limits": {
+      "type": "object",
+      "required": ["max_leverage", "max_position_usdt", "single_loss_limit_percent"],
+      "properties": {
+        "max_leverage": { "type": "integer" },
+        "max_position_usdt": { "type": "number" },
+        "single_loss_limit_percent": { "type": "number" }
+      }
+    }
+  }
+}

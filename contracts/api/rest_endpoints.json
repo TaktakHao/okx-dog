@@ -1,0 +1,159 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OKXDogRestEndpointsContract",
+  "description": "OKX-Dog RESTful API 路由契约定义 (SSOT)",
+  "endpoints": [
+    {
+      "path": "/api/v1/vault/credentials",
+      "method": "POST",
+      "summary": "保存/更新 OKX API 加密凭证",
+      "request_model": "SaveCredentialsRequest",
+      "response_model": "CredentialsStatusResponse",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/vault/status",
+      "method": "GET",
+      "summary": "查询密盒状态与凭据脱敏信息",
+      "request_model": null,
+      "response_model": "CredentialsStatusResponse",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/market/ticker",
+      "method": "GET",
+      "summary": "获取标的最新 Ticker 行情",
+      "query_params": { "symbol": "string" },
+      "response_model": "TickerResponse",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/market/candles",
+      "method": "GET",
+      "summary": "获取标的多周期历史 K 线数据",
+      "query_params": { "symbol": "string", "bar": "string", "limit": "integer" },
+      "response_model": "CandlesResponse",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/market/indicators",
+      "method": "GET",
+      "summary": "获取技术指标实时计算结果 (EMA, MACD, RSI, ATR, 布林带)",
+      "query_params": { "symbol": "string", "timeframe": "string" },
+      "response_model": "IndicatorsResponse",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/trade/order",
+      "method": "POST",
+      "summary": "提交委托订单 (强制通过硬风控拦截层)",
+      "request_model": "OrderRequest",
+      "response_model": "OrderResponse",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/trade/order/{order_id}",
+      "method": "DELETE",
+      "summary": "撤销指定活跃挂单",
+      "path_params": { "order_id": "string" },
+      "response_model": "CancelOrderResponse",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/trade/positions",
+      "method": "GET",
+      "summary": "获取当前活跃持仓列表与未实现盈亏",
+      "query_params": { "symbol": "string" },
+      "response_model": "PositionsResponse",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/trade/orders/active",
+      "method": "GET",
+      "summary": "获取当前活跃挂单列表",
+      "query_params": { "symbol": "string" },
+      "response_model": "ActiveOrdersResponse",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/ai/analyze",
+      "method": "POST",
+      "summary": "触发大模型对当前标的进行多周期深度行情研判",
+      "request_model": "AIAnalysisRequest",
+      "response_model": "AIAnalysisResponse",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/ai/analyze/stream",
+      "method": "GET",
+      "summary": "SSE 流式接收 AI 研判思维链与结构化决策",
+      "query_params": { "symbol": "string" },
+      "response_type": "text/event-stream",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/risk/status",
+      "method": "GET",
+      "summary": "查询当前硬风控状态、当日累计亏损与熔断锁定信息",
+      "request_model": null,
+      "response_model": "RiskStatusResponse",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/risk/reset",
+      "method": "POST",
+      "summary": "重置风控熔断锁定 (需输入主密码授权)",
+      "request_model": "RiskResetRequest",
+      "response_model": "RiskResetResponse",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/system/mode",
+      "method": "PUT",
+      "summary": "切换人机协同工作模式 (MANUAL / SEMI_AUTO / FULL_AUTO)",
+      "request_model": "SetModeRequest",
+      "response_model": "SystemStateResponse",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/system/env",
+      "method": "PUT",
+      "summary": "切换模拟盘 / 实盘环境",
+      "request_model": "SetEnvRequest",
+      "response_model": "SystemStateResponse",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/evolution/team",
+      "method": "GET",
+      "summary": "获取决策层 AI 员工团队档案、当前话语权与贡献度",
+      "request_model": null,
+      "response_model": "AgentEvolutionContract",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/evolution/history",
+      "method": "GET",
+      "summary": "获取智能体进化历史版本快照与基准测试结果",
+      "request_model": null,
+      "response_model": "EvolutionHistoryResponse",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/evolution/rollback",
+      "method": "POST",
+      "summary": "一键回滚决策权重与经验库至历史稳定黄金快照",
+      "request_model": null,
+      "response_model": "EvolutionRollbackResponse",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/evolution/reset",
+      "method": "POST",
+      "summary": "恢复出厂初始权重与默认决策经验配置",
+      "request_model": null,
+      "response_model": "EvolutionResetResponse",
+      "auth_required": true
+    }
+  ]
+}

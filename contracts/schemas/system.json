@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OKXDogSystemSchemas",
+  "description": "OKX-Dog 系统状态、人机协同与凭证安全契约",
+  "definitions": {
+    "SystemState": {
+      "type": "object",
+      "required": ["env", "mode", "backend_status", "ws_status", "ai_status", "is_risk_locked", "active_symbol"],
+      "properties": {
+        "env": { "$ref": "common.json#/definitions/SystemEnv" },
+        "mode": { "$ref": "common.json#/definitions/CopilotMode" },
+        "backend_status": { "type": "string", "enum": ["HEALTHY", "DEGRADED", "ERROR"] },
+        "ws_status": { "type": "string", "enum": ["CONNECTED", "CONNECTING", "DISCONNECTED", "RECONNECTING"] },
+        "ai_status": { "type": "string", "enum": ["IDLE", "ANALYZING", "READY", "ERROR"] },
+        "is_risk_locked": { "type": "boolean", "description": "是否触发硬风控熔断锁定" },
+        "active_symbol": { "type": "string", "description": "当前选中的交易对代码" },
+        "server_time": { "type": "integer", "description": "后端服务器毫秒时间戳" }
+      }
+    },
+    "VaultCredentialStatus": {
+      "type": "object",
+      "required": ["has_okx_key", "has_llm_key", "is_authenticated", "has_withdraw_permission_blocked"],
+      "properties": {
+        "has_okx_key": { "type": "boolean", "description": "OKX API 凭据是否已配置密盒" },
+        "has_llm_key": { "type": "boolean", "description": "LLM API Key 是否已配置" },
+        "is_authenticated": { "type": "boolean", "description": "凭据是否已验证通过" },
+        "has_withdraw_permission_blocked": { "type": "boolean", "description": "提现权限是否已被安全阻断确认 (必须为 true)" },
+        "masked_api_key": { "type": "string", "description": "脱敏 API Key (如 'ab***12')" }
+      }
+    }
+  }
+}

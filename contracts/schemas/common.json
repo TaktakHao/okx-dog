@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OKXDogCommonSchemas",
+  "description": "OKX-Dog 全局通用领域枚举与基础数据结构契约 (SSOT 权威定义)",
+  "definitions": {
+    "OrderSide": {
+      "type": "string",
+      "enum": ["buy", "sell"],
+      "description": "委托买卖方向"
+    },
+    "PosSide": {
+      "type": "string",
+      "enum": ["long", "short", "net"],
+      "description": "持仓方向 (双向开平仓/单向净持仓)"
+    },
+    "OrderType": {
+      "type": "string",
+      "enum": ["limit", "market", "trigger", "post_only", "fok", "ioc", "optimal_limit_ioc"],
+      "description": "委托订单类型"
+    },
+    "OrderState": {
+      "type": "string",
+      "enum": ["live", "partially_filled", "filled", "canceled", "mmp_canceled", "rejected", "risk_rejected", "expired", "fail"],
+      "description": "委托订单状态"
+    },
+    "InstType": {
+      "type": "string",
+      "enum": ["SPOT", "SWAP", "FUTURES", "MARGIN"],
+      "description": "交易产品类型 (InstrumentType 别名)"
+    },
+    "CopilotMode": {
+      "type": "string",
+      "enum": ["MANUAL", "SEMI_AUTO", "FULL_AUTO"],
+      "description": "人机协同工作模式"
+    },
+    "RiskStatus": {
+      "type": "string",
+      "enum": ["NORMAL", "WARNING", "CIRCUIT_BROKEN", "SAFE_MODE"],
+      "description": "系统风控状态"
+    },
+    "MarketRegime": {
+      "type": "string",
+      "enum": ["TRENDING_UP", "TRENDING_DOWN", "RANGING", "VOLATILE_BREAKOUT"],
+      "description": "宏观盘面结构分类"
+    },
+    "SignalAction": {
+      "type": "string",
+      "enum": ["BUY_LONG", "SELL_SHORT", "CLOSE_POSITION", "HOLD_WAIT"],
+      "description": "AI 研判决策信号动作 (SignalDirection 别名)"
+    },
+    "TimeFrame": {
+      "type": "string",
+      "enum": ["1m", "5m", "15m", "1h", "4h", "1d"],
+      "description": "多周期时间框架"
+    }
+  }
+}

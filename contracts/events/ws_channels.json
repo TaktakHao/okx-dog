@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OKXDogWebSocketChannelsContract",
+  "description": "OKX-Dog WebSocket 实时事件通道与推送 Payload 契约",
+  "channels": [
+    {
+      "channel": "public.ticker",
+      "description": "标的实时成交价、24h 涨跌幅与盘口最优价推送",
+      "payload_schema": "contracts/schemas/market.json#/definitions/Ticker"
+    },
+    {
+      "channel": "public.candles",
+      "description": "多周期 K 线实时更新与收盘确认推送",
+      "payload_schema": "contracts/schemas/market.json#/definitions/CandleStick"
+    },
+    {
+      "channel": "public.indicators",
+      "description": "多周期量化指标 (EMA/MACD/RSI/ATR/布林带) 实时计算流",
+      "payload_schema": "contracts/schemas/market.json#/definitions/TechnicalIndicators"
+    },
+    {
+      "channel": "private.orders",
+      "description": "订单状态变更（挂单、部分成交、全部成交、撤销、风控拒单）实时推送",
+      "payload_schema": "contracts/schemas/trade.json#/definitions/OrderDetail"
+    },
+    {
+      "channel": "private.positions",
+      "description": "持仓盈亏、强平价与保证金率实时变动推送",
+      "payload_schema": "contracts/schemas/trade.json#/definitions/PositionDetail"
+    },
+    {
+      "channel": "private.ai_decision",
+      "description": "AI 大模型最新交易研判与决策信号推送",
+      "payload_schema": "contracts/ai/ai_decision_contract.json"
+    },
+    {
+      "channel": "public.micro_anomaly",
+      "description": "L1 毫秒级微观异动（资金费率倒挂、OI 突增、流动性假跌破、清算爆仓）事件雷达推送",
+      "payload_schema": "contracts/schemas/market.json#/definitions/MarketAnomalyEvent"
+    },
+    {
+      "channel": "system.state",
+      "description": "系统协同模式、网络连通性与风控锁定状态推送",
+      "payload_schema": "contracts/schemas/system.json#/definitions/SystemState"
+    }
+  ]
+}

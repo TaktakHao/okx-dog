@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OKXDogMarketSchemas",
+  "description": "OKX-Dog 市场行情、K线与指标数据契约",
+  "definitions": {
+    "CandleStick": {
+      "type": "object",
+      "required": ["timestamp", "open", "high", "low", "close", "volume"],
+      "properties": {
+        "timestamp": { "type": "integer", "description": "K线开盘毫秒时间戳" },
+        "open": { "type": "number" },
+        "high": { "type": "number" },
+        "low": { "type": "number" },
+        "close": { "type": "number" },
+        "volume": { "type": "number" },
+        "vol_currency": { "type": ["number", "null"] },
+        "confirm": { "type": "boolean", "default": true, "description": "K线是否已收盘" }
+      }
+    },
+    "Ticker": {
+      "type": "object",
+      "required": ["symbol", "last", "last_sz", "ask_px", "ask_sz", "bid_px", "bid_sz", "open24h", "high24h", "low24h", "vol24h", "vol_ccy24h", "timestamp"],
+      "properties": {
+        "symbol": { "type": "string" },
+        "last": { "type": "number" },
+        "last_sz": { "type": "number" },
+        "ask_px": { "type": "number" },
+        "ask_sz": { "type": "number" },
+        "bid_px": { "type": "number" },
+        "bid_sz": { "type": "number" },
+        "open24h": { "type": "number" },
+        "high24h": { "type": "number" },
+        "low24h": { "type": "number" },
+        "vol24h": { "type": "number" },
+        "vol_ccy24h": { "type": "number" },
+        "timestamp": { "type": "integer" }
+      }
+    },
+    "TechnicalIndicators": {
+      "type": "object",
+      "required": ["symbol", "timeframe", "ema_7", "ema_25", "ema_99", "macd", "rsi_14", "atr_14", "bollinger_upper", "bollinger_mid", "bollinger_lower"],
+      "properties": {
+        "symbol": { "type": "string" },
+        "timeframe": { "type": "string", "enum": ["1m", "5m", "15m", "1h", "4h", "1d"] },
+        "ema_7": { "type": "number" },
+        "ema_25": { "type": "number" },
+        "ema_99": { "type": "number" },
+        "macd": {
+          "type": "object",
+          "required": ["dif", "dea", "hist"],
+          "properties": {
+            "dif": { "type": "number" },
+            "dea": { "type": "number" },
+            "hist": { "type": "number" }
+          }
+        },
+        "rsi_14": { "type": "number" },
+        "atr_14": { "type": "number" },
+        "bollinger_upper": { "type": "number" },
+        "bollinger_mid": { "type": "number" },
+        "bollinger_lower": { "type": "number" }
+      }
+    },
+    "MicrostructureMetrics": {
+      "type": "object",
+      "required": ["symbol", "timestamp", "order_book_imbalance", "cumulative_volume_delta", "oi_surge_pct", "funding_rate_annualized"],
+      "properties": {
+        "symbol": { "type": "string" },
+        "timestamp": { "type": "integer" },
+        "order_book_imbalance": { "type": "number", "description": "前10档买卖盘挂单失衡率 OBI [-1.0, 1.0]" },
+        "cumulative_volume_delta": { "type": "number", "description": "15m 累积主动买卖量差 CVD" },
+        "oi_surge_pct": { "type": "number", "description": "15m 未平仓合约量变化率 (%)" },
+        "funding_rate_annualized": { "type": "number", "description": "当前当期资金费率折合年化率 (%)" },
+        "recent_liquidations_usdt": { "type": "number", "default": 0.0, "description": "近5分钟清算爆仓名义金额" }
+      }
+    },
+    "MarketAnomalyEvent": {
+      "type": "object",
+      "required": ["event_id", "symbol", "timestamp", "trigger_type", "severity", "metrics_snapshot", "reason"],
+      "properties": {
+        "event_id": { "type": "string" },
+        "symbol": { "type": "string" },
+        "timestamp": { "type": "integer" },
+        "trigger_type": {
+          "type": "string",
+          "enum": ["OI_SURGE_BREAKOUT", "EXTREME_FUNDING_DIVERGENCE", "LIQUIDITY_SWEEP_REVERSAL", "MASSIVE_LIQUIDATION_CASCADE"]
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["INFO", "WARNING", "CRITICAL"]
+        },
+        "metrics_snapshot": { "$ref": "#/definitions/MicrostructureMetrics" },
+        "reason": { "type": "string" }
+      }
+    }
+  }
+}

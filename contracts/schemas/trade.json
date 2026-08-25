@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OKXDogTradeSchemas",
+  "description": "OKX-Dog 交易、订单与持仓数据模型契约",
+  "definitions": {
+    "OrderRequest": {
+      "type": "object",
+      "required": ["symbol", "side", "pos_side", "order_type", "size"],
+      "properties": {
+        "symbol": { "type": "string", "description": "标的代码，例如 BTC-USDT-SWAP" },
+        "side": { "$ref": "common.json#/definitions/OrderSide" },
+        "pos_side": { "$ref": "common.json#/definitions/PosSide" },
+        "order_type": { "$ref": "common.json#/definitions/OrderType" },
+        "size": { "type": "number", "minimum": 0.0001, "description": "委托数量(张数或币数)" },
+        "price": { "type": ["number", "null"], "description": "限价单委托价格" },
+        "client_oid": { "type": ["string", "null"], "description": "客户端自定义订单ID" },
+        "reduce_only": { "type": "boolean", "default": false, "description": "是否只减仓" },
+        "take_profit_price": { "type": ["number", "null"], "description": "附带止盈触发价" },
+        "stop_loss_price": { "type": ["number", "null"], "description": "附带止损触发价" }
+      }
+    },
+    "OrderDetail": {
+      "type": "object",
+      "required": ["order_id", "symbol", "side", "pos_side", "order_type", "state", "size", "filled_size", "avg_price", "created_at"],
+      "properties": {
+        "order_id": { "type": "string", "description": "系统/交易所订单ID" },
+        "client_oid": { "type": ["string", "null"] },
+        "symbol": { "type": "string" },
+        "side": { "$ref": "common.json#/definitions/OrderSide" },
+        "pos_side": { "$ref": "common.json#/definitions/PosSide" },
+        "order_type": { "$ref": "common.json#/definitions/OrderType" },
+        "state": { "$ref": "common.json#/definitions/OrderState" },
+        "price": { "type": ["number", "null"] },
+        "size": { "type": "number" },
+        "filled_size": { "type": "number" },
+        "avg_price": { "type": "number" },
+        "fee": { "type": "number", "default": 0.0 },
+        "created_at": { "type": "integer", "description": "毫秒时间戳" },
+        "updated_at": { "type": "integer", "description": "毫秒时间戳" }
+      }
+    },
+    "PositionDetail": {
+      "type": "object",
+      "required": ["symbol", "pos_side", "pos", "avail_pos", "avg_cost", "mark_price", "upl", "upl_ratio", "leverage", "margin_mode", "mgn_ratio", "liq_price"],
+      "properties": {
+        "symbol": { "type": "string" },
+        "pos_side": { "$ref": "common.json#/definitions/PosSide" },
+        "pos": { "type": "number", "description": "持仓数量" },
+        "avail_pos": { "type": "number", "description": "可平仓数量" },
+        "avg_cost": { "type": "number", "description": "开仓均价" },
+        "mark_price": { "type": "number", "description": "最新标记价格" },
+        "upl": { "type": "number", "description": "未实现盈亏 (USDT)" },
+        "upl_ratio": { "type": "number", "description": "未实现盈亏收益率" },
+        "leverage": { "type": "number", "description": "当前杠杆倍数" },
+        "margin_mode": { "type": "string", "enum": ["cross", "isolated"], "description": "全仓/逐仓" },
+        "mgn_ratio": { "type": "number", "description": "保证金率" },
+        "liq_price": { "type": ["number", "null"], "description": "预估强平价" },
+        "updated_at": { "type": "integer" }
+      }
+    }
+  }
+}

@@ -28,29 +28,46 @@
 > 🎯 **核心视角**：[简述本次回答/任务所聚焦的专业视角与工程标准]
 ```
 
-### 1.3 跨领域与复杂任务协同协议 (Multi-Role Collaboration Protocol)
+---
 
-当任务涉及跨领域研发（例如全栈功能交付、或从多周期指标特征工程 -> AI 策略推理 -> 硬风控拦截 -> OKX 下单 -> 前端图表标记）：
+### 1.3 契约驱动敏捷流水线与协同协议 (Contract-Driven Pipeline)
 
-1. **多阶段角色顺序交接 (Stage Handoff)**：
-   - **Phase 1 (架构与契约)**：由 `Product & System Architect` 或 `Backend Architect` 制定数据契约（Pydantic Schema & TypeScript Interface）。
-   - **Phase 2 (核心实现)**：由对应专业角色（`Backend Architect` / `AI & Quant Engineer` / `Prompt Engineer`）独立实现底层服务、算法与提示词。
-   - **Phase 3 (前端与可视化)**：由 `Senior Frontend Developer` 接入 API 并完成 60 FPS 图表渲染与 UI 交互。
-   - **Phase 4 (风控与安全审计)**：由 `Secrets & Security Auditor` 进行密盒安全、硬风控穿透与并发边界审查。
-2. **多子智能体调度 (`invoke_subagent`)**：
-   - 遇到大型并行任务时，根据专业领域分别派发子智能体（如后端开发子 Agent、前端开发子 Agent、研究子 Agent），各专其职、合并交付。
+对于任何新需求或全栈功能迭代，必须严格遵循以下 **4 阶段闭环** 与 **单一审批门禁**：
+
+```
+[需求输入] → 【阶段 1: PRD 产品定义】 → 【阶段 2: 架构方案与契约固化】 → 【💎 单一审批门禁】 → 【阶段 3: 多端自适应开工】 → 【阶段 4: 契约自动校验与审计】
+```
+
+1. **阶段 1：产品定义 (Product Definition)**
+   - 由 `Product & System Architect` 负责，基于 `okx-dog-product/PRD_TEMPLATE.md` 输出完整 PRD。
+   - 必须包含：核心业务旅程、协同模式（`MANUAL`/`SEMI_AUTO`/`FULL_AUTO`）行为、异常边界分支与契约变更意图。
+2. **阶段 2：架构评审与契约固化 (Architecture & Contract Freeze)**
+   - 由 `Backend Architect` / `Product & System Architect` 负责，在 `contracts/` 目录更新或新建权威契约（REST API、JSON Schema、WebSocket 事件、风控规则）。
+   - 制定技术方案并生成 **WBS 任务依赖树 (DAG)**。
+3. **💎 单一审批门禁 (Single Approval Gate - Human-in-the-Loop)**
+   - 将 PRD 与契约技术方案打包为「需求与契约定稿包」提交给开发者。
+   - **开发者单次审批确认后，各端 Agent 方可进入编码阶段**。
+4. **阶段 3：多端自适应开工 (Adaptive Worker Execution)**
+   - 各端 Agent 依照 `contracts/` 权威契约独立或按依赖序开展实现：
+     - **AI 算法端**：`okx-dog-ai/schemas.py`、`AI_SCHEMA.json`、特征工程与 Prompt。
+     - **后端服务端**：`okx-dog-backend/models.py`、REST 路由、风控拦截层与持久化。
+     - **前端界面端**：`okx-dog-frontend/TYPES_CONTRACT.ts`、图表可视化与交易组件。
+5. **阶段 4：自动化防漂移校验与交付审计 (Verification & Quality Gate)**
+   - 每次交付必须执行契约自动化校验工具：`python3 scripts/verify_contracts.py --strict`。
+   - 由 `Blockchain & Trading Security Auditor` 审计硬风控拦截逻辑与提现权限物理隔离。
 
 ---
 
 ## 2. 核心架构与编码红线 (Engineering Guardrails)
 
-1. **金融级安全第一 (Security First)**:
+1. **契约事实源铁律 (Contract SSOT & Zero Drift)**:
+   - `contracts/` 目录为全系统唯一权威事实源。后端 Pydantic、前端 TypeScript、AI Schema 必须 100% 字段命名、类型及可选性严格对齐。
+   - 任何改动必须通过 `python3 scripts/verify_contracts.py` 自动化检测，严禁出现字段漂移。
+2. **金融级安全第一 (Security First)**:
    - 禁止在任何日志、前端界面、测试脚本或未加密持久层中明文输出 API Key / Secret / Passphrase。
-   - 所有敏感凭据必须经 AES-256-GCM 本地密盒加密。严禁配置或调用任何提现/转账接口。
-2. **硬风控熔断机制 (Hard Risk Lock)**:
+   - 所有敏感凭据必须经 AES-256-GCM 本地密盒加密。**严禁配置或调用任何提现/转账接口**。
+3. **硬风控熔断机制 (Hard Risk Lock)**:
    - 任何下单操作在触达 OKX API 前，必须强制通过后端硬风控拦截层（单笔限额、单日累计亏损熔断、杠杆上限、滑点阈值校验）。
-3. **接口契约严格对齐 (Strict Contract Alignment)**:
-   - 后端 Pydantic 模型、SQLite DDL / 索引与前端 TypeScript Interface 必须 100% 字段命名、类型及可选性严格对齐。
 4. **生产级代码交付 (Production Ready)**:
    - 严禁提交伪代码、未实现的空函数（`pass`, `// TODO`）或未捕获的裸异常。所有代码必须生产级可用，具备完备的类型提示、边界校验与中文注释。
 5. **语言与文档规范 (Language & Documentation)**:

@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OKXDogErrorCodesContract",
+  "description": "OKX-Dog 全局业务错误码契约字典 (SSOT)",
+  "error_codes": {
+    "0": { "http_status": 200, "message": "success", "description": "请求成功" },
+    "40001": { "http_status": 400, "message": "INVALID_PARAMETERS", "description": "请求参数校验失败" },
+    "40101": { "http_status": 401, "message": "MASTER_PASSWORD_INCORRECT", "description": "主密码错误，解密凭证失败" },
+    "40102": { "http_status": 401, "message": "VAULT_NOT_INITIALIZED", "description": "密盒尚未初始化" },
+    "40301": { "http_status": 403, "message": "WITHDRAW_PERMISSION_DETECTED", "description": "检测到危险的提现权限，系统拒绝加载凭证" },
+    "42901": { "http_status": 429, "message": "OKX_RATE_LIMIT_EXCEEDED", "description": "交易所 API 触发频控限流" },
+    "50001": { "http_status": 500, "message": "INTERNAL_SERVER_ERROR", "description": "后端系统内部错误" },
+    "60001": { "http_status": 400, "message": "RISK_ORDER_SIZE_EXCEEDED", "description": "单笔委托金额超过硬风控限额" },
+    "60002": { "http_status": 400, "message": "RISK_DAILY_LOSS_CIRCUIT_BREAKER", "description": "当日累计亏损触发硬熔断，禁止发单" },
+    "60003": { "http_status": 400, "message": "RISK_SLIPPAGE_TOO_HIGH", "description": "预估滑点过高，委托被硬风控拦截" },
+    "60004": { "http_status": 400, "message": "RISK_LEVERAGE_EXCEEDED", "description": "委托杠杆倍数超过系统安全上限" },
+    "70001": { "http_status": 502, "message": "AI_INFERENCE_TIMEOUT", "description": "大模型研判推理超时" },
+    "70002": { "http_status": 502, "message": "AI_RESPONSE_SCHEMA_INVALID", "description": "大模型输出未能通过 JSON Schema 契约校验" }
+  }
+}

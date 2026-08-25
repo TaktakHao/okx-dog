@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentEvolutionContract",
+  "description": "OKX-Dog 多智能体自适应强化奖励、动态权重门控与 AI 员工档案契约 (SSOT 规范定义)",
+  "type": "object",
+  "required": [
+    "team_members",
+    "active_epoch",
+    "total_evolution_rounds",
+    "harness_baseline_status",
+    "last_updated_time"
+  ],
+  "properties": {
+    "team_members": {
+      "type": "array",
+      "description": "决策层当前 AI 员工角色列表",
+      "items": {
+        "$ref": "#/definitions/AgentEmployee"
+      }
+    },
+    "active_epoch": {
+      "type": "string",
+      "description": "当前生效的进化版本快照 ID，例如 'epoch_v1.4_20260825'",
+      "example": "epoch_v1.4_20260825"
+    },
+    "total_evolution_rounds": {
+      "type": "integer",
+      "description": "系统已完成的自主进化总轮次",
+      "minimum": 0
+    },
+    "harness_baseline_status": {
+      "type": "string",
+      "description": "Harness 黄金基准防退化安全灯状态: STABLE(平稳运行), TESTING(基准评测中), ROLLED_BACK(已自动熔断回滚)",
+      "enum": ["STABLE", "TESTING", "ROLLED_BACK"]
+    },
+    "last_updated_time": {
+      "type": "integer",
+      "description": "最新演化时间戳 (毫秒)"
+    },
+    "recent_learned_rules": {
+      "type": "array",
+      "description": "系统近期自主沉淀提炼的避坑口诀与实战经验",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "definitions": {
+    "AgentEmployee": {
+      "type": "object",
+      "description": "AI 决策层员工档案与贡献度数据模型",
+      "required": [
+        "role_id",
+        "name",
+        "nickname",
+        "avatar_icon",
+        "title",
+        "layer",
+        "weight_percent",
+        "level",
+        "contribution_score",
+        "win_rate_7d",
+        "wins_count",
+        "losses_count",
+        "defended_crises_count",
+        "specialty_description"
+      ],
+      "properties": {
+        "role_id": {
+          "type": "string",
+          "description": "员工唯一标识符 (例如 'bull_specialist', 'bear_critic', 'macro_news', 'micro_sniper', 'chief_arbiter')"
+        },
+        "name": {
+          "type": "string",
+          "description": "员工全名 (例如 '多头辩护专家')"
+        },
+        "nickname": {
+          "type": "string",
+          "description": "通俗昵称 (例如 '🚀 冲锋多头分析师')"
+        },
+        "avatar_icon": {
+          "type": "string",
+          "description": "展示图标或 Emoji (例如 'TrendingUp', 'ShieldAlert', 'Globe', 'Zap', 'Award')"
+        },
+        "title": {
+          "type": "string",
+          "description": "专业职称 (例如 '资深趋势研究员', '首席风控挑刺官')"
+        },
+        "layer": {
+          "type": "string",
+          "description": "所属决策层级: perception(感知), adversarial(对抗), arbitration(仲裁), risk(风控)",
+          "enum": ["perception", "adversarial", "arbitration", "risk"]
+        },
+        "weight_percent": {
+          "type": "number",
+          "description": "当前在最终决策中所占的话语权百分比 (10.0 ~ 40.0)",
+          "minimum": 10.0,
+          "maximum": 40.0
+        },
+        "level": {
+          "type": "integer",
+          "description": "员工经验等级 (Lv.1 ~ Lv.10)",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "contribution_score": {
+          "type": "number",
+          "description": "综合历史贡献积分"
+        },
+        "win_rate_7d": {
+          "type": "number",
+          "description": "近7日研判胜率 (0.0 ~ 1.0)",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "wins_count": {
+          "type": "integer",
+          "description": "累计带单盈利笔数"
+        },
+        "losses_count": {
+          "type": "integer",
+          "description": "累计带单止损笔数"
+        },
+        "defended_crises_count": {
+          "type": "integer",
+          "description": "成功识别风险/阻断假突破插针的排雷立功次数"
+        },
+        "specialty_description": {
+          "type": "string",
+          "description": "通俗通懂的专长说明 (例如 '擅长捕捉放量突破与均线多头共振机会')"
+        },
+        "recent_achievement": {
+          "type": "string",
+          "description": "最近立功记录 (例如 '成功在费率过热时预警插针，避免追高亏损')"
+        }
+      }
+    }
+  }
+}
