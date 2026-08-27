@@ -72,3 +72,7 @@
    - 严禁提交伪代码、未实现的空函数（`pass`, `// TODO`）或未捕获的裸异常。所有代码必须生产级可用，具备完备的类型提示、边界校验与中文注释。
 5. **语言与文档规范 (Language & Documentation)**:
    - 所有的架构文档、代码注释、设计说明均使用中文编写；代码变量与函数命名遵循行业标准英文规范。
+6. **需求交付文档同步铁律 (Documentation Sync on Completion)**:
+   - **【强约束规则】每次实现完成任何新需求、算法演进、架构重构或功能迭代后，必须将新特性的设计思路、变更模块、核心 API/组件及使用说明，同步沉淀更新到对应模块的文档中**（如 `okx-dog-ai/README.md`、`okx-dog-backend/README.md`、`okx-dog-frontend/README.md`、根目录 `README.md` 或 `okx-dog-product/` 下的 PRD 文档）。
+   - 严禁“只写代码不更新文档”或交付后造成代码与文档脱节。
+
