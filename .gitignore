@@ -11,5 +11,6 @@ okx_dog_ai
 .env
 __pycache__/
 *.pyc
+exports/*.jsonl
 
 
