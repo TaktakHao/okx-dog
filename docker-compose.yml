@@ -12,7 +12,7 @@ services:
       - HOST=0.0.0.0
       - PORT=8000
       - ENV=production
-      - MASTER_PASSWORD=${MASTER_PASSWORD:-OKX_DOG_DEFAULT_MASTER_PASS_2026}
+      - MASTER_PASSWORD=${MASTER_PASSWORD:?请在环境变量或 .env 文件中设置安全强主密码 MASTER_PASSWORD}
       # 默认大模型推理端点 (使用宿主机 Antigravity CLI 服务)
       - DEFAULT_LLM_PROVIDER=${DEFAULT_LLM_PROVIDER:-antigravity}
       - DEFAULT_LLM_BASE_URL=http://host.docker.internal:8001

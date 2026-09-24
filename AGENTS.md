@@ -16,6 +16,9 @@
 | **API 开放平台与接口治理**<br>(OpenAPI / AsyncAPI 规范制定、RESTful & WebSocket 协议标准化、频控治理、统一错误码、SDK 契约) | **API 平台工程师**<br>(`API Platform Engineer`) | `.agents/skills/engineering-api-platform-engineer/SKILL.md`<br>(`agency-api-platform-engineer`) | • Contract-First 接口契约先行设计<br>• 严格的接口向前兼容性与版本策略<br>• 全局频控 (Rate Limiting)、重试策略与标准错误模型 |
 | **凭证安全、身份认证与密钥隔离**<br>(OKX API Key / Secret / Passphrase 密盒管理、AES-256-GCM 本地加密存储、主密钥内存驻留防泄漏、敏感信息 100% 脱敏、提现权限物理隔离) | **凭据与敏感密钥安全工程师**<br>(`Secrets & Credential Hygiene Engineer`) | `.agents/skills/engineering-identity-access-engineer/SKILL.md`<br>(`agency-identity-access-engineer`) | • 零明文凭据泄露（日志、持久层、前端 100% 隔离）<br>• 权限物理隔离（严禁配置任何提现/转账权限）<br>• 密钥生成、解密使用、内存销毁全生命周期防护 |
 | **区块链交易风控与安全审计**<br>(交易所 API 边界审计、防巨额滑点/防插针误触发、下单/撤单竞态条件与防重放发单审计、硬风控熔断规则合规审查) | **交易风控安全审计师**<br>(`Blockchain & Trading Security Auditor`) | 专项风控审计规则 | • 硬风控拦截逻辑穿透测试<br>• 发单幂等性、并发防重放与竞态条件消除<br>• 极端行情自动熔断与人工介入机制审计 |
+| **财务建模与现金流分析**<br>(交易账户资金流建模、现金流预测、敏感性分析、资本分配、损益归因、财务数据深度挖掘与决策支持) | **资深财务分析师**<br>(`Financial Analyst`) | `.agents/skills/finance-financial-analyst/SKILL.md`<br>(`agency-financial-analyst`) | • 严格先陈述假设后得出结论<br>• 现金流与资金利用率深度分析<br>• 关键假设敏感性测试与不确定性量化 |
+| **财务规划与预算分析 (FP&A)**<br>(交易资金预算、滚动预测、实际与预期偏差归因 Variance Analysis、运营资金配置、ROI 与资金效率优化) | **FP&A 财务规划分析师**<br>(`FP&A Analyst`) | `.agents/skills/finance-fpa-analyst/SKILL.md`<br>(`agency-fp-a-analyst`) | • 明确责任与资金归属<br>• 深入解释偏差根本原因及前瞻影响<br>• 动态滚动预测与资金使用效率优化 |
+| **投资研究与资产尽调**<br>(宏观市场环境研究、标的资产基本面尽调、投资组合风险收益权衡、多空假设验证、反共识洞察与下行风险把控) | **资深投资研究员**<br>(`Investment Researcher`) | `.agents/skills/finance-investment-researcher/SKILL.md`<br>(`agency-investment-researcher`) | • 重点审视下行风险与空头情景（Bear Case）<br>• 投资逻辑需可被证伪并明确监控触发条件<br>• 严谨的基本面与多资产量化尽调 |
 
 ---
 
