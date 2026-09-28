@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OKXDogQuantAdvancedSchemas",
+  "description": "OKX-Dog 高级数理量化与风控分析契约 (源自 oke_auto_trade 核心优势融合)",
+  "definitions": {
+    "DcaLiquidationAnalysis": {
+      "type": "object",
+      "required": [
+        "is_safe",
+        "max_safe_dca_orders",
+        "breakeven_price",
+        "current_liq_price",
+        "next_dca_liq_price",
+        "next_order_price",
+        "liq_safety_buffer_pct",
+        "required_extreme_margin"
+      ],
+      "properties": {
+        "is_safe": {
+          "type": "boolean",
+          "description": "加仓链条是否安全 (是否存在未决穿仓死穴)"
+        },
+        "max_safe_dca_orders": {
+          "type": "integer",
+          "description": "最大安全可加仓轮数"
+        },
+        "breakeven_price": {
+          "type": "number",
+          "description": "加仓后的持仓保本均价"
+        },
+        "current_liq_price": {
+          "type": "number",
+          "description": "当前持仓强平价"
+        },
+        "next_dca_liq_price": {
+          "type": "number",
+          "description": "下一档加仓后的推导强平价"
+        },
+        "next_order_price": {
+          "type": "number",
+          "description": "下一档计划加仓触发价"
+        },
+        "liq_safety_buffer_pct": {
+          "type": "number",
+          "description": "距离强平价的安全缓冲百分比 (%)"
+        },
+        "required_extreme_margin": {
+          "type": "number",
+          "description": "承受 30% 极端逆势波动所需总隔离保证金 (USDT)"
+        },
+        "violation_reason": {
+          "type": ["string", "null"],
+          "description": "强平穿透拦截原因说明"
+        }
+      }
+    },
+    "KalmanPairMetrics": {
+      "type": "object",
+      "required": [
+        "main_symbol",
+        "sub_symbol",
+        "dynamic_beta",
+        "dynamic_alpha",
+        "spread_z_score",
+        "covariance_trace",
+        "is_divergent",
+        "suggested_arbitrage_action"
+      ],
+      "properties": {
+        "main_symbol": {
+          "type": "string",
+          "description": "配对主资产 (例如 BTC-USDT-SWAP)"
+        },
+        "sub_symbol": {
+          "type": "string",
+          "description": "配对从属资产 (例如 ETH-USDT-SWAP)"
+        },
+        "dynamic_beta": {
+          "type": "number",
+          "description": "卡尔曼滤波动态对冲斜率 Beta"
+        },
+        "dynamic_alpha": {
+          "type": "number",
+          "description": "卡尔曼滤波动态截距 Alpha"
+        },
+        "spread_z_score": {
+          "type": "number",
+          "description": "当前残差价差归一化 Z-Score"
+        },
+        "covariance_trace": {
+          "type": "number",
+          "description": "协方差矩阵迹 Tr(P)，监控协整健康度"
+        },
+        "is_divergent": {
+          "type": "boolean",
+          "description": "是否协整破裂发散 (触发对冲熔断)"
+        },
+        "suggested_arbitrage_action": {
+          "type": "string",
+          "enum": ["NONE", "LONG_SUB_SHORT_MAIN", "SHORT_SUB_LONG_MAIN", "CLOSE"],
+          "description": "配对套利建议动作"
+        }
+      }
+    },
+    "StrategyPlateauScore": {
+      "type": "object",
+      "required": [
+        "is_plateau_qualified",
+        "drop_top3_decay",
+        "fee_to_gross_ratio",
+        "friction_stress_pnl",
+        "neighbor_stability_score"
+      ],
+      "properties": {
+        "is_plateau_qualified": {
+          "type": "boolean",
+          "description": "是否通过参数平原与生死线过滤"
+        },
+        "drop_top3_decay": {
+          "type": "number",
+          "description": "剔除 Top3 暴利单后的收益保留率 (要求 >= 0.50)"
+        },
+        "fee_to_gross_ratio": {
+          "type": "number",
+          "description": "手续费占毛利润比例 (要求 < 0.40)"
+        },
+        "friction_stress_pnl": {
+          "type": "number",
+          "description": "双边 40bps 滑点摩擦压力测试后的净期望 (USDT)"
+        },
+        "neighbor_stability_score": {
+          "type": "number",
+          "description": "邻域 +/-20% 参数平原稳定性得分 (0-100)"
+        }
+      }
+    }
+  }
+}
