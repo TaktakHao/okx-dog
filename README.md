@@ -44,8 +44,14 @@ OKX-Dog 是一款为高频合约与 TradFi 衍生品量化交易员量身打造�
     - **两状态递归卡尔曼滤波协整配对与动态对冲 (`kalman_pair_engine.py`)**：实时动态追踪跨币种配对（如 BTC/ETH）的动态协整斜率 $\beta_t$ 与截距 $\alpha_t$，自适应价差 Z-Score 偏离触发均值回归套利与协方差发散自愈熔断；
     - **实盘抗过拟合“生死线”过滤与“参数平原”稳定性评估 (`strategy_plateau_validator.py`)**：Top-3 偶然暴利剔除保留率 $\ge 50\%$、手续费/毛利比 $< 40\%$、双边 40bps 强滑点抗压测试、核心参数 $\pm 20\%$ 扰动平原收益保留率 $\ge 70\%$，彻底淘汰刀锋式过拟合孤岛；
     - **端到端契约与金融终端一体化协同**：权威契约 SSOT 零漂移，前端 AutoPilot 卡片集成动态强平安全缓冲指示与卡尔曼协整雷达。
+11. **v6.0 基于 Paperclip 的 AI 虚拟对冲基金治理与 Mac mini 混合轻量常驻部署 (Paperclip Orchestration & Mac mini Hybrid)**：
+    - **本地 CLI 套餐包月机制驱动**：依托系统原生 Antigravity CLI (agy)，享受免单日零钱扣费的确定性算力，日常由 0 Token Python 哨兵前哨巡检，仅在形态共振时调用 CLI；
+    - **长期主义与战绩分红奖励机制 (Performance-Based Bonus Quota)**：建立 7 天滚动收益考核，实盘平仓盈利自动向立功员工派发算力与深度思考奖励 Tokens（每 +10 USDT 奖励 10,000 Tokens），空头专家成功排雷避险亦可获嘉奖；
+    - **特权解锁与动态话语权赋能**：高战绩额度员工自动解锁 DeepSeek-R1 等 `<think>` 深度思考长链模式，并在投决会中享有更高的加权投票权；
+    - **Mac mini 宿主原生 + 极轻容器混合运行架构**：OKX-Dog FastAPI 与本地 agy 跑在 macOS 宿主机，Paperclip 与 Postgres 跑在轻量 Docker 容器（OrbStack），整机常驻内存仅约 650MB，CPU 长期均值 < 3%，机身温凉，支持 Tailscale 外网加密穿透。
 
 ---
+
 
 ## 🏛️ 项目工程架构与独立仓库索引
 
