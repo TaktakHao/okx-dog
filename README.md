@@ -80,10 +80,25 @@ bash bootstrap.sh
 ```
 
 ### 第 3 步：一键启动系统
-```bash
-bash start.sh
-```
-> 系统将自动拉起后端 FastAPI (8000端口) 与前端 React (3000端口)，并在浏览器中自动打开控制台！
+
+* **模式 A：v6.0 虚拟量化公司全功能集群 (推荐，含 Paperclip 6大员工与自动接入)**
+  ```bash
+  # 一键全面启动并自动接入 Paperclip
+  ./company.sh start
+
+  # 一键平滑彻底关闭所有服务 (前端+后端+AI+Docker)
+  ./company.sh stop
+
+  # 全息巡检系统运行状态与 CFO 战绩奖金池
+  ./company.sh status
+  ```
+  > 启动后访问：暗黑操盘大屏 `http://localhost:3000` ｜ Paperclip 看板 `http://localhost:3100`
+
+* **模式 B：本地极简单机前台运行 (快速调试)**
+  ```bash
+  bash start.sh
+  ```
+  > 系统将拉起后端 FastAPI (8000端口) 与前端 React (3000端口)，按 Ctrl+C 退出。
 
 ---
 

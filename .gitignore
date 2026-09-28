@@ -12,5 +12,7 @@ okx_dog_ai
 __pycache__/
 *.pyc
 exports/*.jsonl
+.pids/
+.paperclip_bootstrapped.json
 
 

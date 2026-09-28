@@ -33,24 +33,73 @@
 
 ---
 
-## 3. 一键启动集群
+## 3. 一键启动、一键关闭与全自动接入 Paperclip
 
-在主工程根目录下，执行专为 Mac mini 打造的一键启动脚本：
+项目已深度集成统一的运维中枢脚本 `company.sh`（以及对应的独立快捷脚本 `start_company_macmini.sh` 和 `stop_company_macmini.sh`）。
+
+### 3.1 一键全面启动并自动接入 (One-Click Start & Auto-Bootstrap)
+
+在终端只需执行一行命令：
 
 ```bash
-bash start_company_macmini.sh
+./company.sh start
+# 或者: ./start_company_macmini.sh
 ```
 
-脚本将自动执行：
-1. 检查本地 `agy` CLI 命令行就绪状态；
-2. 通过 Docker/OrbStack 拉起 `docker-compose.paperclip.yml`（Postgres + Paperclip 容器）；
-3. 在宿主机后台拉起 OKX-Dog AI 决策网关与 CFO 配额中枢（端口 8001）；
-4. 在宿主机后台拉起 OKX-Dog 7x24h 毫秒级交易与风控引擎（端口 8000）。
+**底层执行的全自动流水线**：
+1. **环境探检**：自动验证本地 Python 3.9+、Node.js 与 `agy` (Antigravity CLI) 包月环境；
+2. **拉起 Paperclip**：自动通过 Docker/OrbStack 后台启动 Paperclip 组织中枢与 PostgreSQL 17 容器（端口 `3100`）；
+3. **拉起 AI 大脑**：在宿主机启动 AI 决策网关与 CFO 战绩激励引擎（端口 `8001`）；
+4. **拉起交易核心**：在宿主机启动 7x24h 毫秒级交易与 5 重不可绕过硬风控底座（端口 `8000`）；
+5. **拉起操盘大屏**：在宿主机后台启动金融暗黑交易大屏（端口 `3000`）；
+6. **🤖 全自动接入 Paperclip (Auto Bootstrap)**：
+   - 自动执行 `python3 scripts/bootstrap_paperclip_company.py`；
+   - 自动将 `contracts/paperclip/company_org_contract.json` 契约中的 **6 大 AI 虚拟员工**（诸葛仲裁、冲锋多头、铁血风控、全球眼、盘口狙击、公道伯）登记入册；
+   - 自动绑定每个岗位的核心 KPI、话语权权重与回调 Webhook（`http://host.docker.internal:8001/api/v1/paperclip/task/anomaly`）；
+   - 生成本地注册凭据 `.paperclip_bootstrapped.json`，**用户完全无需手动在网页上逐一配置智能体，开箱即用！**
 
-启动完成后，即可打开浏览器访问：
-* **Paperclip 虚拟公司看板**: `http://localhost:3100`
-* **OKX-Dog 暗黑交易大屏**: `http://localhost:3000`
-* **CFO 员工配额 API**: `http://localhost:8001/api/v1/paperclip/quota/overview`
+启动完成后，即可打开浏览器直接访问：
+* **暗黑操盘大屏 (投资人工作台)**: `http://localhost:3000`
+* **Paperclip 虚拟公司组织与任务看板**: `http://localhost:3100`
+* **AI 网关与 CFO 战绩配额 API**: `http://localhost:8001/api/v1/paperclip/org`
+* **交易核心与硬风控 Swagger Docs**: `http://localhost:8000/docs`
+
+---
+
+### 3.2 一键安全平滑关闭 (One-Click Graceful Stop)
+
+当你需要维护系统或重启硬件时，只需执行：
+
+```bash
+./company.sh stop
+# 或者: ./stop_company_macmini.sh
+```
+
+**关闭动作将自动执行**：
+1. 平滑停止前端 React/Vite 服务（释放端口 `3000`）；
+2. 优雅停止后端交易中枢，确保无挂单与内存状态泄漏（释放端口 `8000`）；
+3. 停止 AI 决策网关与 CFO 审计进程（释放端口 `8001`）；
+4. 暂停 Paperclip 与 PostgreSQL 容器集群；
+5. 彻底回收 PID 存证与清理端口占用，实现 0 残留退出。
+
+---
+
+### 3.3 运行状态全息巡检与日志追踪
+
+```bash
+# 全息巡检系统状态、端口连通性与 CFO 战绩奖金池概况
+./company.sh status
+
+# 实时追踪运行日志
+./company.sh logs          # 查看后端与AI综合最近日志
+./company.sh logs ai       # 实时追踪 AI 决策网关日志
+./company.sh logs backend  # 实时追踪 后端交易与风控日志
+./company.sh logs frontend # 实时追踪 前端大屏日志
+./company.sh logs docker   # 实时追踪 Paperclip 容器日志
+
+# 平滑重启
+./company.sh restart
+```
 
 ---
 
