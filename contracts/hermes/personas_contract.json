@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HermesMultiPersonaContract",
+  "description": "OKX-Dog v6.0 Hermes Agent 6 大虚拟员工角色与权限矩阵权威契约",
+  "type": "object",
+  "required": ["roles", "danger_endpoints", "allowed_commands"],
+  "properties": {
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "name", "title", "hermes_persona_id", "scope", "allowed_ops"],
+        "properties": {
+          "role": { "type": "string" },
+          "name": { "type": "string" },
+          "title": { "type": "string" },
+          "hermes_persona_id": { "type": "string" },
+          "reports_to": { "type": ["string", "null"] },
+          "scope": { "type": "string" },
+          "allowed_ops": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "danger_endpoints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "allowed_commands": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "roles": [
+    {
+      "role": "CHIEF_ARBITER",
+      "name": "陈守拙",
+      "title": "首席投决仲裁官 (CEO / Chief Arbiter)",
+      "hermes_persona_id": "chen_shouzhuo",
+      "reports_to": null,
+      "scope": "全局统筹、多空仲裁、经验知识库沉淀与提案审核",
+      "allowed_ops": ["status", "whoami", "apply-proposal", "rollback-version", "knowledge-rule"]
+    },
+    {
+      "role": "BULL_SPECIALIST",
+      "name": "张大炮",
+      "title": "多头趋势研究员 (Bull Specialist)",
+      "hermes_persona_id": "zhang_dapao",
+      "reports_to": "CHIEF_ARBITER",
+      "scope": "均线动量突破研判、样本外网格回测、多头顺势调参提案",
+      "allowed_ops": ["status", "whoami", "create-proposal", "grid-search-summary"]
+    },
+    {
+      "role": "BEAR_CRITIC",
+      "name": "周铁山",
+      "title": "空头/铁血风控审计 (Bear Critic & Security)",
+      "hermes_persona_id": "zhou_tieshan",
+      "reports_to": "CHIEF_ARBITER",
+      "scope": "7x24h 盯盘巡检、红队挑刺、回撤压力测试、极端风险紧急停机",
+      "allowed_ops": ["status", "whoami", "stop-autopilot", "create-proposal"]
+    },
+    {
+      "role": "MACRO_NEWS",
+      "name": "林望远",
+      "title": "宏观与资讯分析师 (Macro News)",
+      "hermes_persona_id": "lin_wangyuan",
+      "reports_to": "CHIEF_ARBITER",
+      "scope": "全网宏观快讯、美联储加息降息情绪监控、重大黑天鹅排雷",
+      "allowed_ops": ["status", "whoami", "create-proposal"]
+    },
+    {
+      "role": "MICROSTRUCTURE",
+      "name": "赵小刀",
+      "title": "盘口微观结构与执行 (Microstructure Engineer)",
+      "hermes_persona_id": "zhao_xiaodao",
+      "reports_to": "CHIEF_ARBITER",
+      "scope": "盘口挂单深度、大单异动监控、滑点与 Maker 成交率优化",
+      "allowed_ops": ["status", "whoami", "create-proposal"]
+    },
+    {
+      "role": "CFO_AUDITOR",
+      "name": "钱公道",
+      "title": "CFO / 战绩审计总监 (CFO & Performance Auditor)",
+      "hermes_persona_id": "qian_gongdao",
+      "reports_to": "CHIEF_ARBITER",
+      "scope": "每日 08:00 战绩复盘推送、夏普比率与盈亏归因、算力激励额度管理",
+      "allowed_ops": ["status", "whoami", "reviews/daily", "finance/health"]
+    }
+  ],
+  "danger_endpoints": [
+    "/api/v1/trade/order",
+    "/api/v1/trade/order/cancel",
+    "/api/v1/vault",
+    "/api/v1/vault/keys",
+    "/api/v1/vault/decrypt"
+  ],
+  "allowed_commands": [
+    "status",
+    "whoami",
+    "stop-autopilot",
+    "create-proposal",
+    "apply-proposal",
+    "rollback-version"
+  ]
+}

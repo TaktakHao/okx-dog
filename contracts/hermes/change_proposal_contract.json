@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HermesChangeProposalContract",
+  "description": "OKX-Dog v6.0 Hermes Agent 移动聊天端参数变更提案与审批流契约",
+  "type": "object",
+  "required": ["proposal_schema", "approval_rules"],
+  "properties": {
+    "proposal_schema": {
+      "type": "object",
+      "required": ["id", "proposer_role", "target", "patch", "before", "evidence", "risk_direction", "status", "created_at"],
+      "properties": {
+        "id": { "type": "string" },
+        "proposer_role": { "type": "string" },
+        "target": {
+          "type": "string",
+          "enum": ["AUTO_PILOT_CONFIG", "RISK_CONFIG", "SYSTEM_CONFIG", "KNOWLEDGE_RULE"]
+        },
+        "patch": { "type": "object" },
+        "before": { "type": "object" },
+        "evidence": { "type": "array" },
+        "risk_direction": {
+          "type": "string",
+          "enum": ["TIGHTEN", "LOOSEN", "NEUTRAL"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PROPOSED", "APPROVED", "REJECTED", "APPLIED", "ROLLED_BACK"]
+        },
+        "created_at": { "type": "string" },
+        "decided_at": { "type": ["string", "null"] },
+        "applied_version_id": { "type": ["string", "null"] }
+      }
+    },
+    "approval_rules": {
+      "type": "object",
+      "required": ["require_explicit_confirmation_in_semi_auto", "max_confidence_step", "max_leverage_step"],
+      "properties": {
+        "require_explicit_confirmation_in_semi_auto": { "type": "boolean" },
+        "max_confidence_step": { "type": "number" },
+        "max_leverage_step": { "type": "number" }
+      }
+    }
+  },
+  "proposal_schema": {
+    "id": "prop_example_001",
+    "proposer_role": "BULL_SPECIALIST",
+    "target": "AUTO_PILOT_CONFIG",
+    "patch": { "min_confidence": 0.88 },
+    "before": { "min_confidence": 0.82 },
+    "evidence": [
+      {
+        "metric": "sharpe_ratio",
+        "sample_period": "30d",
+        "value": 2.15,
+        "baseline": 1.78
+      }
+    ],
+    "risk_direction": "TIGHTEN",
+    "status": "PROPOSED",
+    "created_at": "2026-09-29T14:47:00Z",
+    "decided_at": null,
+    "applied_version_id": null
+  },
+  "approval_rules": {
+    "require_explicit_confirmation_in_semi_auto": true,
+    "max_confidence_step": 0.1,
+    "max_leverage_step": 2.0
+  }
+}

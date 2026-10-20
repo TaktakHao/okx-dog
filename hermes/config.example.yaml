@@ -1,0 +1,75 @@
+# OKX-Dog v6.0 - Hermes Agent 配置文件模板 (Mac mini 常驻架构)
+# 复制并重命名为 ~/.hermes/config.yaml 或项目根目录 hermes/config.yaml
+
+# 默认模型选择 (可使用 Nous Portal, OpenRouter, DeepSeek, OpenAI 或 本地端点)
+model:
+  provider: "openrouter" # 或 "nous_portal", "deepseek", "custom"
+  name: "deepseek/deepseek-r1" # 或 "nousresearch/hermes-3-llama-3.1-70b"
+  temperature: 0.2
+
+# 终端执行后端配置 (Mac mini 宿主机原生推荐 local)
+terminal:
+  backend: "local"
+  working_directory: "/Users/wesson/OKX-dog"
+
+# 消息通讯网关 (Gateway) 配置
+gateway:
+  enabled: true
+  port: 8088
+  # 启用的通讯通道 (根据你的使用偏好启用)
+  channels:
+    telegram:
+      enabled: false
+      bot_token: "${TELEGRAM_BOT_TOKEN}"
+      allowed_users: ["${TELEGRAM_USER_ID}"]
+    discord:
+      enabled: false
+      bot_token: "${DISCORD_BOT_TOKEN}"
+    # 微信/QQ 桥接配置 (通过 Webhook 或 Claw 协议)
+    webhook:
+      enabled: true
+      endpoint: "http://127.0.0.1:8088/api/v1/hermes/inbound"
+      secret: "${HERMES_WEBHOOK_SECRET:-okxdog_hermes_2026}"
+
+# 技能包与工具配置
+skills:
+  directory: "hermes/skills"
+  enabled:
+    - "okxdog_ops"
+
+# 多角色设定定义
+personas:
+  directory: "hermes/personas"
+  default: "chen_shouzhuo" # 默认接待管家
+
+# 定时调度例程 (Cron Automations)
+cron:
+  enabled: true
+  jobs:
+    # 1. 周铁山 5 分钟风控巡检
+    - id: "routine_guard_watchdog"
+      name: "周铁山 5 分钟盯盘风控巡检"
+      schedule: "*/5 * * * *"
+      persona: "zhou_tieshan"
+      command: "python3 scripts/okxdog_ops_cli.py status"
+
+    # 2. 钱公道 每日 08:00 战绩复盘
+    - id: "routine_daily_review"
+      name: "钱公道 每日 08:00 战绩复盘"
+      schedule: "0 8 * * *"
+      persona: "qian_gongdao"
+      command: "python3 scripts/okxdog_ops_cli.py reviews/daily"
+
+    # 3. 陈守拙 周度经验沉淀
+    - id: "routine_weekly_learning"
+      name: "陈守拙 周度经验沉淀"
+      schedule: "0 9 * * 1"
+      persona: "chen_shouzhuo"
+      command: "python3 scripts/okxdog_ops_cli.py diagnosis-report"
+
+    # 4. 张大炮 周日夜间网格调参
+    - id: "routine_weekend_tuning"
+      name: "张大炮 周日夜间网格调参"
+      schedule: "0 22 * * 0"
+      persona: "zhang_dapao"
+      command: "python3 scripts/okxdog_ops_cli.py grid-search"

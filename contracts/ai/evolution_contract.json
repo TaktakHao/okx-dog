@@ -76,7 +76,7 @@
         },
         "nickname": {
           "type": "string",
-          "description": "通俗昵称 (例如 '🚀 冲锋多头分析师')"
+          "description": "通俗昵称 (例如 '🚀 张大炮 · 多头趋势研究员')"
         },
         "avatar_icon": {
           "type": "string",

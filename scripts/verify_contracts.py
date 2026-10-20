@@ -64,6 +64,7 @@ class ContractVerifier:
         self.step_3_verify_backend_alignment()
         self.step_4_verify_frontend_alignment()
         self.step_5_verify_risk_rules()
+        self.step_6_verify_hermes_ops_contracts()
 
         self.print_summary()
         if self.strict and (self.errors or self.warnings):
@@ -71,7 +72,7 @@ class ContractVerifier:
         return len(self.errors) == 0
 
     def step_1_verify_contract_files(self):
-        print(f"{BOLD}[1/5] 校验 contracts/ 统一事实源 (SSOT) JSON 规范...{RESET}")
+        print(f"{BOLD}[1/6] 校验 contracts/ 统一事实源 (SSOT) JSON 规范...{RESET}")
         if not CONTRACTS_DIR.exists():
             self.log_error(f"契约根目录不存在: {CONTRACTS_DIR}")
             return
@@ -269,6 +270,59 @@ class ContractVerifier:
             self.log_pass("硬风控执行模式验证通过: enforce_post_only = True (强制 Maker 消除 Taker 滑点与费率磨损)")
         else:
             self.log_warn("风控警告: enforce_post_only 未设为 True")
+
+    def step_6_verify_hermes_ops_contracts(self):
+        print(f"\n{BOLD}[6/6] 校验 Hermes Agent v6.0 多角色与自动运营契约对齐...{RESET}")
+        personas_file = CONTRACTS_DIR / "hermes" / "personas_contract.json"
+        proposal_file = CONTRACTS_DIR / "hermes" / "change_proposal_contract.json"
+        routines_file = CONTRACTS_DIR / "hermes" / "cron_routines_contract.json"
+
+        if not personas_file.exists() or not proposal_file.exists() or not routines_file.exists():
+            self.log_error("Hermes Agent v6.0 核心契约文件缺失")
+            return
+
+        with open(personas_file, "r", encoding="utf-8") as f:
+            personas_data = json.load(f)
+        with open(proposal_file, "r", encoding="utf-8") as f:
+            prop_data = json.load(f)
+        with open(routines_file, "r", encoding="utf-8") as f:
+            routines_data = json.load(f)
+
+        # 检查员工角色覆盖
+        roles = [r["role"] for r in personas_data.get("roles", [])]
+        expected_roles = ["CHIEF_ARBITER", "BULL_SPECIALIST", "BEAR_CRITIC", "MACRO_NEWS", "MICROSTRUCTURE", "CFO_AUDITOR"]
+        if set(roles) == set(expected_roles):
+            self.log_pass(f"Hermes Agent 6 大专属员工多角色设定全量覆盖: {roles}")
+        else:
+            self.log_error(f"Hermes 角色不匹配: 期望 {expected_roles}，实际 {roles}")
+
+        # 检查高危端点阻断列表
+        dangers = personas_data.get("danger_endpoints", [])
+        if any("/api/v1/trade/order" in ep for ep in dangers) and any("/api/v1/vault" in ep for ep in dangers):
+            self.log_pass(f"Hermes 硬风控阻断端点白名单配置完备 ({len(dangers)} 个受控端点)")
+        else:
+            self.log_error("Hermes 契约缺少交易或密盒硬阻断端点")
+
+        # 检查例程定义
+        routines = routines_data.get("routines", [])
+        if len(routines) >= 4:
+            self.log_pass(f"Hermes Cron 定时运营例程 4 大自动化流程 (盯盘/复盘/学习/调参) 已就绪: {[r['routine_id'] for r in routines]}")
+        else:
+            self.log_error(f"Hermes Cron 运营例程缺失，仅有 {len(routines)} 个")
+
+        # 检查后端模型对齐
+        backend_code = BACKEND_MODELS.read_text(encoding="utf-8")
+        frontend_code = FRONTEND_TYPES.read_text(encoding="utf-8")
+
+        for m in ["ChangeProposalModel", "ConfigVersionModel", "TuningPolicyModel", "AgentIntrospectionResponse"]:
+            if f"class {m}" in backend_code:
+                self.log_pass(f"后端运营模型已实现: class {m}")
+            else:
+                self.log_error(f"后端缺失运营模型: {m}")
+            if f"interface {m}" in frontend_code:
+                self.log_pass(f"前端 TypeScript 运营契约接口已对齐: interface {m}")
+            else:
+                self.log_error(f"前端缺失运营契约接口: {m}")
 
     def print_summary(self):
         print(f"\n{BOLD}{CYAN}----------------------------------------------------------------------{RESET}")

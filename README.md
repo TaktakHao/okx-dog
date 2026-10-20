@@ -29,7 +29,7 @@ OKX-Dog 是一款为高频合约与 TradFi 衍生品量化交易员量身打造�
 8. **v4.1 多智能体强化奖励自进化与通俗「AI 员工看板」**：
    - **复合强化奖励分解**：平仓后自动结合实现盈亏比 ($S_{rr}$)、MFE/MAE 精度与排雷避险贡献度打分。
    - **Softmax 动态加权门控**：带 $[8\%, 35\%]$ 上下限约束的动态话语权分配，避免单一角色垄断。
-   - **极简通俗 AI 员工团队看板**：拟人化 6 大量化员工角色（冲锋多头、铁血风控、全球情报、链上巨鲸、盘口狙击、量化仲裁），零金融门槛一目了然看懂话语权与战绩，并支持 Harness 防退化黄金基准守护与一键安全回滚。
+   - **极简通俗 AI 员工团队看板**：拟人化 6 大量化员工角色（张大炮·多头、周铁山·风控、林望远·宏观、链上巨鲸侦察员、赵小刀·盘口、陈守拙·仲裁），零金融门槛一目了然看懂话语权与战绩，并支持 Harness 防退化黄金基准守护与一键安全回滚。
 9. **v5.0 企业级量化基础设施与高保真执行中枢 (Enterprise Grade Quant Architecture)**：
    - **自动化实时对账中枢 (Reconciliation)**：以 OKX 远端交易所为唯一真实事实源 (SSOT)，60 秒自动纠偏自愈外部成交与状态漂移，杜绝“幽灵持仓”；
    - **Smart Pegging 盘口动态做市**：买一/卖一档贴盘 `POST_ONLY` 挂单，自适应价差漂移与智能追单看门狗，提升成交率并节省 60%+ 交易成本；
@@ -44,14 +44,15 @@ OKX-Dog 是一款为高频合约与 TradFi 衍生品量化交易员量身打造�
     - **两状态递归卡尔曼滤波协整配对与动态对冲 (`kalman_pair_engine.py`)**：实时动态追踪跨币种配对（如 BTC/ETH）的动态协整斜率 $\beta_t$ 与截距 $\alpha_t$，自适应价差 Z-Score 偏离触发均值回归套利与协方差发散自愈熔断；
     - **实盘抗过拟合“生死线”过滤与“参数平原”稳定性评估 (`strategy_plateau_validator.py`)**：Top-3 偶然暴利剔除保留率 $\ge 50\%$、手续费/毛利比 $< 40\%$、双边 40bps 强滑点抗压测试、核心参数 $\pm 20\%$ 扰动平原收益保留率 $\ge 70\%$，彻底淘汰刀锋式过拟合孤岛；
     - **端到端契约与金融终端一体化协同**：权威契约 SSOT 零漂移，前端 AutoPilot 卡片集成动态强平安全缓冲指示与卡尔曼协整雷达。
-11. **v6.0 基于 Paperclip 的 AI 虚拟对冲基金治理与 Mac mini 混合轻量常驻部署 (Paperclip Orchestration & Mac mini Hybrid)**：
-    - **本地 CLI 套餐包月机制驱动**：依托系统原生 Antigravity CLI (agy)，享受免单日零钱扣费的确定性算力，日常由 0 Token Python 哨兵前哨巡检，仅在形态共振时调用 CLI；
-    - **长期主义与战绩分红奖励机制 (Performance-Based Bonus Quota)**：建立 7 天滚动收益考核，实盘平仓盈利自动向立功员工派发算力与深度思考奖励 Tokens（每 +10 USDT 奖励 10,000 Tokens），空头专家成功排雷避险亦可获嘉奖；
-    - **特权解锁与动态话语权赋能**：高战绩额度员工自动解锁 DeepSeek-R1 等 `<think>` 深度思考长链模式，并在投决会中享有更高的加权投票权；
-    - **Mac mini 宿主原生 + 极轻容器混合运行架构**：OKX-Dog FastAPI 与本地 agy 跑在 macOS 宿主机，Paperclip 与 Postgres 跑在轻量 Docker 容器（OrbStack），整机常驻内存仅约 650MB，CPU 长期均值 < 3%，机身温凉，支持 Tailscale 外网加密穿透。
+11. **v6.0 基于 Hermes Agent 的 AI 虚拟对冲基金多角色治理与 Mac mini 原生常驻部署 (Hermes Multi-Persona & Native Ops)**：
+    - **移动即时通讯消息网关直连 (Hermes Gateway)**：全面接入 Nous Research 开源的 `hermes-agent`，原生支持 Telegram、Discord、Slack 以及微信/QQ（Claw/Webhook）双向消息互通，随时在手机聊天中查战绩、派工单、收警报；
+    - **6 大虚拟量化员工多角色设定 (Multi-Persona)**：陈守拙（CEO / 首席投决仲裁）、周铁山（空头 / 铁血风控审计）、钱公道（CFO / 战绩审计总监）、张大炮（多头趋势研究员）、赵小刀（盘口微观结构与执行）、林望远（宏观与资讯分析师），各司其职，恪守权限边界；
+    - **7x24h 自动化量化运营闭环 (Built-in Cron)**：周铁山 5 分钟风控巡检与熔断报警（盯盘）、钱公道每日 08:00 自动生成战绩卡片推送到手机（复盘）、陈守拙周度提炼避坑规则（学习）、张大炮周日夜间网格回测调优（调参）；
+    - **聊天端参数变更提案-确认闭环 (`ChangeProposal` & `ConfigVersion`)**：员工改参必须发起提案并附回测收益证据；手机聊天中回复“确认”方可原子生效并留存快照版本，支持一键安全回滚；
+    - **员工专用安全运维工具 (`scripts/okxdog_ops_cli.py`)**：内置白名单与权限鉴权，硬风控物理阻断任何下单、撤单、平仓及密盒越权操作；
+    - **极轻量原生常驻**：无需 Docker，无需外部数据库，单个 Python/uv 原生进程托管，整机常驻内存仅约 350-500MB，Mac mini 长期运行机身温凉，支持 Tailscale 零配置外网加密穿透。
 
 ---
-
 
 ## 🏛️ 项目工程架构与独立仓库索引
 
@@ -61,7 +62,7 @@ OKX-Dog 是一款为高频合约与 TradFi 衍生品量化交易员量身打造�
 | :--- | :--- | :--- | :--- |
 | **前端终端** | `okx-dog-frontend` | React 18 + Vite 5 + TypeScript + Lightweight Charts + Tailwind | 暗黑金融交易终端、多周期图表、标的检索器(`Ctrl+P`)与双卡片操盘看板 |
 | **后端服务** | `okx-dog-backend` | FastAPI + OKX v5 WebSocket/REST + SQLite (WAL) + 异步协程 | 7x24h 常驻巡检引擎、5重硬风控拦截层、AES-256凭证密盒与模拟撮合沙盒 |
-| **AI 研判** | `okx-dog-ai` | Antigravity CLI (agy) + OpenAI 兼容协议 + Token 压缩中枢 | 多周期指标计算、高密度 Prompt 组装、CoT 思维链流式提取与结构化契约 |
+| **AI 研判** | `okx-dog-ai` | Hermes Multi-Persona + Antigravity CLI (agy) + Token 压缩中枢 | 多周期指标计算、多角色共识对抗网络、CoT 思维链流式提取与结构化契约 |
 | **产品文档** | `okx-dog-product` | Markdown 规范与状态机图解 | PRD 需求文档、系统架构设计、WBS 任务分解与用户手册 |
 
 ---
@@ -81,18 +82,20 @@ bash bootstrap.sh
 
 ### 第 3 步：一键启动系统
 
-* **模式 A：v6.0 虚拟量化公司全功能集群 (推荐，含 Paperclip 6大员工与自动接入)**
+* **模式 A：v6.0 虚拟量化公司全功能集群 (推荐，含 Hermes 6 大员工与通讯网关)**
   ```bash
-  # 一键全面启动并自动接入 Paperclip
+  # 一键全面启动并就绪 Hermes 多角色体系
   ./company.sh start
 
-  # 一键平滑彻底关闭所有服务 (前端+后端+AI+Docker)
+  # 一键平滑彻底关闭所有服务 (前端+后端+AI+Hermes)
   ./company.sh stop
 
   # 全息巡检系统运行状态与 CFO 战绩奖金池
   ./company.sh status
   ```
-  > 启动后访问：暗黑操盘大屏 `http://localhost:3000` ｜ Paperclip 看板 `http://localhost:3100`
+  > 启动后访问：暗黑操盘大屏 `http://localhost:3000` ｜ 后端接口文档 `http://localhost:8000/docs` ｜ 多角色架构 `http://localhost:8001/api/v1/hermes/org`
+  >
+  > 详见 [`docs/MACMINI_DEPLOYMENT_GUIDE.md`](docs/MACMINI_DEPLOYMENT_GUIDE.md) 与 [`docs/HERMES_SETUP.md`](docs/HERMES_SETUP.md)。
 
 * **模式 B：本地极简单机前台运行 (快速调试)**
   ```bash

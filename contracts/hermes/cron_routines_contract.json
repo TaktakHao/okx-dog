@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HermesCronRoutinesContract",
+  "description": "OKX-Dog v6.0 Hermes Agent 定时自动化运营例程契约",
+  "type": "object",
+  "required": ["routines"],
+  "properties": {
+    "routines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["routine_id", "name", "assignee_role", "cron_expression", "command", "target_channel"],
+        "properties": {
+          "routine_id": { "type": "string" },
+          "name": { "type": "string" },
+          "assignee_role": { "type": "string" },
+          "cron_expression": { "type": "string" },
+          "command": { "type": "string" },
+          "target_channel": { "type": "string" }
+        }
+      }
+    }
+  },
+  "routines": [
+    {
+      "routine_id": "routine_guard_watchdog",
+      "name": "周铁山 5 分钟盯盘风控巡检",
+      "assignee_role": "BEAR_CRITIC",
+      "cron_expression": "*/5 * * * *",
+      "command": "python3 scripts/okxdog_ops_cli.py status",
+      "target_channel": "ops_alert_channel"
+    },
+    {
+      "routine_id": "routine_daily_review",
+      "name": "钱公道 每日 08:00 战绩复盘通报",
+      "assignee_role": "CFO_AUDITOR",
+      "cron_expression": "0 8 * * *",
+      "command": "python3 scripts/okxdog_ops_cli.py reviews/daily",
+      "target_channel": "executive_report_channel"
+    },
+    {
+      "routine_id": "routine_weekly_learning",
+      "name": "陈守拙 周度经验沉淀与策略体检",
+      "assignee_role": "CHIEF_ARBITER",
+      "cron_expression": "0 9 * * 1",
+      "command": "python3 scripts/okxdog_ops_cli.py diagnosis-report",
+      "target_channel": "executive_report_channel"
+    },
+    {
+      "routine_id": "routine_weekend_tuning",
+      "name": "张大炮 周日夜间样本外网格调参",
+      "assignee_role": "BULL_SPECIALIST",
+      "cron_expression": "0 22 * * 0",
+      "command": "python3 scripts/okxdog_ops_cli.py grid-search",
+      "target_channel": "strategy_discussion_channel"
+    }
+  ]
+}

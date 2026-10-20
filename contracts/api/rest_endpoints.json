@@ -154,6 +154,73 @@
       "request_model": null,
       "response_model": "EvolutionResetResponse",
       "auth_required": true
+    },
+    {
+      "path": "/api/v1/ops/proposals",
+      "method": "POST",
+      "summary": "创建参数/规则变更提案",
+      "request_model": "ChangeProposalCreate",
+      "response_model": "ChangeProposalModel",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/ops/proposals",
+      "method": "GET",
+      "summary": "分页查询变更提案列表",
+      "query_params": { "status": "string", "target": "string" },
+      "response_model": "ChangeProposalListResponse",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/ops/proposals/{id}/apply",
+      "method": "POST",
+      "summary": "审批生效变更提案并生成版本快照",
+      "path_params": { "id": "string" },
+      "request_model": "ApplyProposalRequest",
+      "response_model": "ConfigVersionModel",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/ops/proposals/{id}/reject",
+      "method": "POST",
+      "summary": "拒绝变更提案",
+      "path_params": { "id": "string" },
+      "request_model": "RejectProposalRequest",
+      "response_model": "ChangeProposalModel",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/ops/config-versions",
+      "method": "GET",
+      "summary": "查询配置版本快照历史",
+      "query_params": { "target": "string" },
+      "response_model": "ConfigVersionListResponse",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/ops/config-versions/{version_id}/rollback",
+      "method": "POST",
+      "summary": "一键回滚配置到指定历史版本",
+      "path_params": { "version_id": "string" },
+      "request_model": null,
+      "response_model": "ConfigVersionModel",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/ops/agents/me",
+      "method": "GET",
+      "summary": "员工身份与令牌自省 (Token Introspection)",
+      "request_model": null,
+      "response_model": "AgentIntrospectionResponse",
+      "auth_required": true
+    },
+    {
+      "path": "/api/v1/ops/webhooks",
+      "method": "POST",
+      "summary": "注册事件出站 Webhook 订阅 (推送到 Paperclip trigger)",
+      "request_model": "OutboundWebhookRegisterRequest",
+      "response_model": "OutboundWebhookModel",
+      "auth_required": true
     }
   ]
 }
