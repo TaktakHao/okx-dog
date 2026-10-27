@@ -154,6 +154,22 @@
       "request_model": null,
       "response_model": "EvolutionResetResponse",
       "auth_required": true
+    },
+    {
+      "path": "/api/v1/market/instruments/search",
+      "method": "GET",
+      "summary": "在 OKX 全量真实在架交易标的池中执行模糊检索与详情查询",
+      "query_params": { "query": "string", "inst_type": "string", "quote_ccy": "string", "limit": "integer" },
+      "response_model": "InstrumentSearchResponse",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/market/subscribe-focus",
+      "method": "POST",
+      "summary": "批量订阅关注标的并在 WebSocket 建立长连接分发",
+      "request_model": "SubscribeFocusRequest",
+      "response_model": "SubscribeFocusResponse",
+      "auth_required": false
     }
   ]
 }

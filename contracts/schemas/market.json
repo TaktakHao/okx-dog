@@ -92,6 +92,42 @@
         "metrics_snapshot": { "$ref": "#/definitions/MicrostructureMetrics" },
         "reason": { "type": "string" }
       }
+    },
+    "InstrumentInfo": {
+      "type": "object",
+      "required": ["symbol", "inst_id", "inst_type", "base_ccy", "quote_ccy"],
+      "properties": {
+        "symbol": { "type": "string", "description": "统一标的代码 (如 BTC-USDT-SWAP, PEPE-USDT)" },
+        "inst_id": { "type": "string", "description": "OKX 官方产品 ID" },
+        "inst_type": { "type": "string", "enum": ["SPOT", "SWAP", "MARGIN", "FUTURES"] },
+        "base_ccy": { "type": "string", "description": "交易货币币种 (如 BTC, PEPE)" },
+        "quote_ccy": { "type": "string", "description": "计价货币币种 (如 USDT, USDC)" },
+        "settle_ccy": { "type": "string", "description": "结算货币 (如 USDT)" },
+        "name": { "type": "string", "description": "标的可读全称" },
+        "category": { "type": "string", "description": "标的分类" },
+        "is_tradfi": { "type": "boolean", "default": false },
+        "ct_val": { "type": "number", "description": "合约面值" },
+        "ct_mult": { "type": "number", "description": "合约乘数" },
+        "ct_val_ccy": { "type": "string", "description": "合约面值计价货币" },
+        "tick_sz": { "type": "number", "description": "下单价格精度" },
+        "lot_sz": { "type": "number", "description": "下单数量精度" },
+        "min_sz": { "type": "number", "description": "最小下单数量" },
+        "lever": { "type": "number", "description": "最大可用杠杆倍数" },
+        "state": { "type": "string", "description": "产品状态: live / suspend" }
+      }
+    },
+    "InstrumentSearchResponse": {
+      "type": "object",
+      "required": ["instruments", "total_count"],
+      "properties": {
+        "instruments": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/InstrumentInfo" }
+        },
+        "total_count": { "type": "integer" },
+        "query": { "type": "string" },
+        "cached": { "type": "boolean", "default": true }
+      }
     }
   }
 }

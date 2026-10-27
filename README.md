@@ -17,9 +17,9 @@ OKX-Dog 是一款为高频合约与 TradFi 衍生品量化交易员量身打造�
    - 高信息密度 Master System Prompt 与行式紧凑序列化，自适应数值截断去噪，在保留 100% 量化指标的前提下显著压降 Token 开销。
 5. **不可绕过的金融级硬风控拦截中枢 (Hard Risk Lock & Panic Button)**：
    - 单笔限额、单日亏损熔断、杠杆上限、滑点保护与 Panic Button 紧急两阶段全撤全平。
-6. **人机协同清晰的前端双卡片终端 (React 18 + Lightweight Charts)**：
-   - **AutoPilot 看板**：7x24h 脱机运行状态、多标的池管理、移动保本指示、最近巡检日志流与时序收益曲线。
-   - **AICopilot 副驾驶**：交易员主观多周期深度研判、打字机思维链与一键采纳下单。
+6. **全自动量化操盘与全景交互式多维收益终端 (React 18 + Lightweight Charts)**：
+   - **AutoPilot 看板**：7x24h 脱机运行状态、多标的池管理、移动保本指示与自动平仓战绩流。
+   - **EquityCurvePanel 全景多维时序收益面板**：基于 `lightweight-charts` Canvas 引擎，支持鼠标左键拖拽平移、滚轮无级缩放、全屏沉浸放大，同屏叠加展示**总净盈亏**、**已实现盈亏**、**持仓浮动盈亏**、**账户总权益 + 历史最高净值水线 (High-Water Mark)** 与**累计收益率 (%)**，并在曲线上实时打点标记历次自动平仓战绩。
 7. **v3.5 AI Quant Studio & Codex Harness 智能体沙箱操作系统**：
    - **AI 自主量化策略研发**：自然语言秒级生成无未来函数的高性能 Python 向量化代码。
    - **AST 静态安全白名单审查**：100% 阻断 `os/sys/socket/eval/exec` 等危险指令与系统外联。
@@ -49,6 +49,11 @@ OKX-Dog 是一款为高频合约与 TradFi 衍生品量化交易员量身打造�
     - **长期主义与战绩分红奖励机制 (Performance-Based Bonus Quota)**：建立 7 天滚动收益考核，实盘平仓盈利自动向立功员工派发算力与深度思考奖励 Tokens（每 +10 USDT 奖励 10,000 Tokens），空头专家成功排雷避险亦可获嘉奖；
     - **特权解锁与动态话语权赋能**：高战绩额度员工自动解锁 DeepSeek-R1 等 `<think>` 深度思考长链模式，并在投决会中享有更高的加权投票权；
     - **Mac mini 宿主原生 + 极轻容器混合运行架构**：OKX-Dog FastAPI 与本地 agy 跑在 macOS 宿主机，Paperclip 与 Postgres 跑在轻量 Docker 容器（OrbStack），整机常驻内存仅约 650MB，CPU 长期均值 < 3%，机身温凉，支持 Tailscale 外网加密穿透。
+12. **v6.1 实盘交易全链路穿透修复与正数学期望值量化引擎重构 (Live Execution & Positive-Expectancy Quant Upgrade)**：
+    - **OKX v5 统一账户可用保证金精准解析 (`okx_rest.py`)**：彻底解决统一账户返回空字符串 `""` 导致 `availMgn` 回退失效、实盘可用保证金被误判为 `0.0 USDT` 的问题，全面兼容单币种/跨币种/组合保证金模式；
+    - **753 个真实合约规格精度对齐与小数张数支持 (`okx_rest.py`, `instrument_service.py`)**：对接 `okx_instruments_cache.json` 全量真实 `ctVal`、`lotSz`、`minSz`、`tickSz`，支持 `0.01` 张小数合约精度与小资金实盘建仓，消除合约张数与基础币数量换算偏差；
+    - **实盘与模拟沙盒风控物理隔离 (`risk_controller.py`, `routers/paper.py`)**：切换实盘/模拟环境时自动隔离单日累计盈亏与回撤计数器，支持手动/AI 市价单滑点保护与回撤降级杠杆自适应收敛，消除模拟盘磨损锁死实盘下单的问题；
+    - **多周期共振与 ATR 吊灯分批止盈正期望值模型 (`services/ai_service.py`, `auto_pilot.py`)**：引入 1h EMA20/50 纠缠度震荡过滤与 10 分钟反手保护期，持久化阶段 1 减半止盈状态 (`tp_stage1_done`)，采用 $2.0 \times \text{ATR}$ / $3.4 \times \text{ATR}$ 分批止盈与 $1.5 \times \text{ATR}$ 宽幅吊灯移动止损，将净盈亏比提升至 $1.6:1 \sim 2.0:1$。
 
 ---
 
