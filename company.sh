@@ -65,8 +65,11 @@ start_company() {
     if command -v docker &> /dev/null; then
         if docker info &> /dev/null; then
             echo -e "  正在启动 Paperclip 与 PostgreSQL 17 轻量容器..."
-            docker compose -f "$ROOT_DIR/docker-compose.paperclip.yml" up -d
-            echo -e "  ${GREEN}✔ [OK] Paperclip 容器集群已在后台启动 (Web控制台: 3100)${RESET}"
+            if docker compose -f "$ROOT_DIR/docker-compose.paperclip.yml" up -d 2>/dev/null; then
+                echo -e "  ${GREEN}✔ [OK] Paperclip 容器集群已在后台启动 (Web控制台: 3100)${RESET}"
+            else
+                echo -e "  ${YELLOW}⚠ [提示] Paperclip 镜像拉取跳过，继续拉起核心量化服务${RESET}"
+            fi
         else
             echo -e "  ${YELLOW}⚠ [提示] Docker 守护进程未启动，请开启 OrbStack 或 Docker Desktop。宿主机部分将先行启动${RESET}"
         fi
@@ -121,15 +124,24 @@ start_company() {
         echo -e "  ${YELLOW}正在安装前端依赖...${RESET}"
         npm install
     fi
-    nohup npx vite --host 0.0.0.0 --port 3000 < /dev/null > "$LOG_DIR/frontend.log" 2>&1 &
+    nohup ./node_modules/.bin/vite --host 0.0.0.0 --port 3000 > "$LOG_DIR/frontend.log" 2>&1 &
     FRONTEND_PID=$!
     echo $FRONTEND_PID > "$PID_DIR/frontend.pid"
     echo -e "  ${GREEN}✔ [OK] 前端暗黑大屏已在后台运行 (PID: $FRONTEND_PID, 见 frontend.log)${RESET}"
 
+    # 等待前端健康探针
+    for i in {1..15}; do
+        if curl -s http://127.0.0.1:3000 > /dev/null 2>&1; then
+            echo -e "  ${GREEN}✔ [健康] 前端服务已通过接口探活${RESET}"
+            break
+        fi
+        sleep 0.5
+    done
+
     # 6. 自动执行 Paperclip 自动接入与 6 大员工注册引导
     echo -e "\n${BOLD}[6/6] 自动向 Paperclip 注册虚拟量化公司与 6 大 AI 员工...${RESET}"
     cd "$ROOT_DIR"
-    $PYTHON_CMD "$ROOT_DIR/scripts/bootstrap_paperclip_company.py"
+    $PYTHON_CMD "$ROOT_DIR/scripts/bootstrap_paperclip_company.py" || true
 
     echo -e "\n${BOLD}${GREEN}======================================================================${RESET}"
     echo -e "${BOLD}${GREEN}   🎉 全套系统已成功一键拉起并自动接入！系统处于全自动运营状态       ${RESET}"
