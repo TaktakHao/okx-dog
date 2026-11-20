@@ -7,7 +7,7 @@
 ### 核心铁律 (Contract Iron Rules)
 1. **契约先行 (Contract-First)**：任何新需求或功能变更，必须**首先更新本目录下的契约文件**，经架构确认并经人类审批后，方可由各端开工实现。
 2. **严禁私自漂移 (Zero Drift)**：禁止任何端（前端、后端、AI）私自新增、修改或删除字段。所有数据结构必须 100% 对齐。
-3. **自动化强校验 (Automated Gate)**：每次版本提交与阶段验收，必须运行 `python scripts/verify_contracts.py` 确保 100% 契约合规。
+3. **自动化强校验 (Automated Gate)**：每次版本提交与阶段验收，必须运行 `python3 scripts/verify_contracts.py --strict` 确保 100% 契约合规。
 
 ---
 
@@ -23,6 +23,7 @@ contracts/
 │   ├── common.json                # 全局基础枚举（Side, PosSide, Mode, Env等）
 │   ├── market.json                # K线、深度行情、衍生品指标数据契约
 │   ├── trade.json                 # 订单、持仓、成交明细与平仓数据契约
+│   ├── quant_advanced.json        # 同构回测、数据湖、复盘与双引擎扩展契约
 │   └── system.json                # 系统状态、凭据安全状态、健康检查契约
 ├── ai/                            # AI 算法与提示词契约
 │   ├── ai_decision_contract.json  # 大模型多周期研判结构化输出契约 (JSON Schema)

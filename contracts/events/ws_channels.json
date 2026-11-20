@@ -39,6 +39,11 @@
       "payload_schema": "contracts/schemas/market.json#/definitions/MarketAnomalyEvent"
     },
     {
+      "channel": "public.capital_flow_radar",
+      "description": "全市场资金流雷达、板块轮动热力与动态多空候选池定期刷新推送",
+      "payload_schema": "contracts/schemas/capital_flow.json#/definitions/CapitalFlowRadarOverview"
+    },
+    {
       "channel": "system.state",
       "description": "系统协同模式、网络连通性与风控锁定状态推送",
       "payload_schema": "contracts/schemas/system.json#/definitions/SystemState"

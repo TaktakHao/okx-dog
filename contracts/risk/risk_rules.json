@@ -47,6 +47,26 @@
       "type": "boolean",
       "default": true,
       "description": "开仓委托是否强制 Post-Only 只做 Maker 以消除 Taker 滑点与高额费率"
+    },
+    "max_same_sector_same_direction_positions": {
+      "type": "integer",
+      "default": 2,
+      "description": "单一板块内允许同时持有的最大同方向仓位数，防止满仓集中押注单一赛道同向回撤"
+    },
+    "min_24h_volume_usdt_for_rotation": {
+      "type": "number",
+      "default": 30000000.0,
+      "description": "全市场动态资金流轮动标的的最低 24h 成交额门槛 (USDT)，过滤低流动性插针妖币"
+    },
+    "anti_fomo_24h_change_pct_cap": {
+      "type": "number",
+      "default": 18.0,
+      "description": "反 FOMO / 防地板空保护：24h 单边涨跌幅绝对值超过该百分比时禁止顺向追单"
+    },
+    "contrarian_extreme_percentile_guard": {
+      "type": "number",
+      "default": 85.0,
+      "description": "多周期逆向资金流极端百分位护栏（≥85% 禁止低位追空；≤15% 禁止高位追多）"
     }
   }
 }

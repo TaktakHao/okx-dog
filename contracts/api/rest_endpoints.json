@@ -170,6 +170,46 @@
       "request_model": "SubscribeFocusRequest",
       "response_model": "SubscribeFocusResponse",
       "auth_required": false
+    },
+    {
+      "path": "/api/v1/capital-flow/radar",
+      "method": "GET",
+      "summary": "获取全市场资金流雷达总览、KPI、板块资金快照、存量OI与实时成交错位分布及动态多空池",
+      "query_params": { "sector": "string" },
+      "response_model": "CapitalFlowRadarOverview",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/capital-flow/series",
+      "method": "GET",
+      "summary": "获取指定板块或全市场的基准锚定双图时序（UTC同小时量能强度、累计净流20日极值包络带、历史周期回溯）",
+      "query_params": { "scope": "string", "ma_window": "integer" },
+      "response_model": "CapitalFlowSeriesResponse",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/capital-flow/extremes",
+      "method": "GET",
+      "summary": "获取历史净流入/净流出 Top10 极端事件对照表（含近期高亮标识）",
+      "query_params": { "scope": "string" },
+      "response_model": "ExtremeFlowLeaderboardResponse",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/capital-flow/refresh",
+      "method": "POST",
+      "summary": "手动触发全市场资金流雷达即时刷新与接口诊断",
+      "request_model": null,
+      "response_model": "CapitalFlowRadarOverview",
+      "auth_required": false
+    },
+    {
+      "path": "/api/v1/capital-flow/config",
+      "method": "PUT",
+      "summary": "更新全市场资金流轮动参数（流动性门槛、单板块上限、美股做空开关、黑白名单）",
+      "request_model": "CapitalFlowConfig",
+      "response_model": "CapitalFlowConfig",
+      "auth_required": true
     }
   ]
 }
